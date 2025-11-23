@@ -1,84 +1,123 @@
 const productList = document.querySelector('#products');
 const addProductForm = document.querySelector('#add-product-form');
-const updateProductForm = document.querySelector('#update-product-form');
-const updateProductId = document.querySelector('#update-id');
-const updateProductName = document.querySelector('#update-name');
-const updateProductPrice = document.querySelector('#update-price');
-const updateProductDescription =document.querySelector('#update-description')
+const addName = document.querySelector('#name');
+const addPrice = document.querySelector('#price');
+const addDescription = document.querySelector('#description');
+const updateForm = document.querySelector('#update-product-form');
+const updateId = document.querySelector('#update-id');
+const updateName = document.querySelector('#update-name');
+const updatePrice = document.querySelector('#update-price');
+const updateDescription = document.querySelector('#update-description');
+const cancelUpdate = document.querySelector('#cancel-update');
 
 
-// Function to fetch all products from the server
+// Fetch Products
 async function fetchProducts() {
-  const response = await fetch('http://localhost:3000/products');
-  const products = await response.json();
+    const response = await fetch('http://localhost:3000/products');
+    const products = await response.json();
 
-  // Clear product list
-  productList.innerHTML = '';
+    productList.innerHTML = '';
 
-  // Add each product to the list
-  products.forEach(product => {
-    const li = document.createElement('li');
-    li.innerHTML = `${product.name} - $${product.price} -  ${product.description}`;
+    products.forEach(product => {
+        const li = document.createElement('li');
 
-    // Add delete button for each product
-    const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = 'Delete';
-    deleteButton.addEventListener('click', async () => {
-      await deleteProduct(product.id);
-      await fetchProducts();
+        li.innerHTML = `
+      ${product.name} - $${product.price} - ${product.description}
+    `;
+
+        // Delete Button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = async () => {
+            await deleteProduct(product.id);
+            fetchProducts();
+        };
+
+        // Update Button
+        const updateBtn = document.createElement('button');
+        updateBtn.textContent = 'Update';
+        updateBtn.onclick = () => {
+            loadProductIntoForm(product);
+        };
+
+        li.appendChild(deleteBtn);
+        li.appendChild(updateBtn);
+
+        productList.appendChild(li);
     });
-    li.appendChild(deleteButton);
-
-    // Add update button for each product
-    const updateButton = document.createElement('button');
-    updateButton.innerHTML = 'Update';
-    updateButton.addEventListener('click', () => {
-      updateProductId.value = product.id;
-      updateProductName.value = product.name;
-      updateProductPrice.value = product.price;
-      updateProductDescription.value = product.description;
-    });
-    li.appendChild(updateButton);
-
-    productList.appendChild(li);
-  });
 }
 
 
-// Event listener for Add Product form submit button
+// Add product
 addProductForm.addEventListener('submit', async event => {
-  event.preventDefault();
-  const name = addProductForm.elements['name'].value;
-  const price = addProductForm.elements['price'].value;
-  const description = addProductForm.elements['description'].value;
-  await addProduct(name, price, description);
-  addProductForm.reset();
-  await fetchProducts();
+    event.preventDefault();
+
+    await addProduct(addName.value, addPrice.value, addDescription.value);
+
+    addProductForm.reset();
+    fetchProducts();
 });
 
-// Function to add a new product
 async function addProduct(name, price, description) {
-  const response = await fetch('http://localhost:3000/products', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ name, price, description})
-  });
-  return response.json();
+    return fetch('http://localhost:3000/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, price, description })
+    });
 }
 
-// Function to delete a new product
+
+// Load product
+function loadProductIntoForm(product) {
+    updateId.value = product.id;
+    updateName.value = product.name;
+    updatePrice.value = product.price;
+    updateDescription.value = product.description;
+
+    updateForm.classList.remove('hidden');
+    addProductForm.classList.add('hidden');
+}
+
+
+// Update product
+updateForm.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const id = updateId.value;
+
+    await updateProduct(id, updateName.value, updatePrice.value, updateDescription.value);
+
+    updateForm.reset();
+    updateForm.classList.add('hidden');
+    addProductForm.classList.remove('hidden');
+
+    fetchProducts();
+});
+
+async function updateProduct(id, name, price, description) {
+    return fetch(`http://localhost:3000/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, price, description })
+    });
+}
+
+
+// Delete product
 async function deleteProduct(id) {
-  const response = await fetch('http://localhost:3000/products/' + id, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    //body: JSON.stringify({id})
-  });
-  return response.json();
+    return fetch(`http://localhost:3000/products/${id}`, {
+        method: 'DELETE'
+    });
 }
 
-// Fetch all products on page load
+
+// Cancel update
+cancelUpdate.onclick = () => {
+    updateForm.reset();
+    updateForm.classList.add('hidden');
+    addProductForm.classList.remove('hidden');
+};
+
+
+// Load initial list
 fetchProducts();
