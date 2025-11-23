@@ -6,43 +6,46 @@
 </head>
 <body>
 
-<h1>Product CRUD</h1>
+
 
 <!-- Form Add!-->
-<form id="add-product-form">
-    <h2>Add the product</h2>
+<center>
+    <h1>Product CRUD</h1>
+    <form class="fundo" id="add-product-form">
+        <h2>Add the product</h2>
 
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+        <label for="name">Name:</label>
+        <input class= "add-input" type="text" id="name" name="name" required>
 
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required step="0.01">
+        <label for="price">Price:</label>
+        <input class= "add-input" type="text" id="price" name="price"  >
 
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required>
+        <label for="description">Description:</label>
+        <input class= "add-input" type="text" id="description" name="description" required>
 
-    <button type="submit">Add</button>
-</form>
+        <button class="buttons" type="submit">Add</button>
+    </form>
 
-<!-- form update -->
-<form id="update-product-form" class="hidden">
+    <!-- form update -->
+    <form id="update-product-form" class="hidden">
 
-    <h2>Update the product</h2>
+        <h2>Update the product</h2>
 
-    <input type="hidden" id="update-id">
+        <input type="hidden" id="update-id">
 
-    <label for="update-name">Name:</label>
-    <input type="text" id="update-name" name="update-name" required>
+        <label for="update-name">Name:</label>
+        <input class= "add-input" type="text" id="update-name" name="update-name" required>
 
-    <label for="update-price">Price:</label>
-    <input type="number" id="update-price" name="update-price" required step="0.01">
+        <label for="update-price">Price:</label>
+        <input class= "add-input" type="text" id="update-price" name="update-price" required>
 
-    <label for="update-description">Description:</label>
-    <input type="text" id="update-description" name="update-description" required>
+        <label for="update-description">Description:</label>
+        <input class= "add-input" type="text" id="update-description" name="update-description" required>
 
-    <button type="submit">Save</button>
-    <button type="button" id="cancel-update">Cancel</button>
-</form>
+        <button class="buttons" type="submit">Save</button>
+        <button class="buttons" type="button" id="cancel-update">Cancel</button>
+    </form>
+</center>
 
 <ul id="products"></ul>
 

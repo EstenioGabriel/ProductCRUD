@@ -28,6 +28,7 @@ async function fetchProducts() {
         // Delete Button
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
+        deleteBtn.id = 'button-delete';
         deleteBtn.onclick = async () => {
             await deleteProduct(product.id);
             fetchProducts();
@@ -36,7 +37,9 @@ async function fetchProducts() {
         // Update Button
         const updateBtn = document.createElement('button');
         updateBtn.textContent = 'Update';
+        updateBtn.id = 'button-update';
         updateBtn.onclick = () => {
+
             loadProductIntoForm(product);
         };
 
