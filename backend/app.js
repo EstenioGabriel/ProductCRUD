@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 //import express from 'express';
 const express = require('express');
 
@@ -32,9 +34,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const supabase =
-    supabaseClient.createClient('https://fxasuetvpgopnzcrqgsp.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4YXN1ZXR2cGdvcG56Y3JxZ3NwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0NjIwMTUsImV4cCI6MjA3ODAzODAxNX0.3Ku_IE_fqUPl9CO3Gzzw7UEa-MHDW_gaeePy5HTG9ho')
-
+    supabaseClient.createClient(process.env.API_URL, process.env.API_SECRET_KEY)
 
 app.get('/products', async (req, res) => {
     const {data, error} = await supabase
