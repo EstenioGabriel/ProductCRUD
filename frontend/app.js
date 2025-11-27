@@ -165,7 +165,7 @@ idSearch.onclick = async () => {
     }
 
     const li = document.createElement("li");
-    li.textContent = `${product.name} - $${product.price} - ${product.description}`;
+    li.textContent = "ID:" + product.id + "<br>" + "Name: " + product.name + "<br>" + "Price: R$ " + product.price + "<br>" + "Description: " + product.description;
 
     idProductsList.appendChild(li);
 };
