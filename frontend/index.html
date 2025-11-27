@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Product CRUD</title>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -9,21 +9,24 @@
 
 
 <!-- Form Add!-->
-<center>
+<div>
     <h1>Product CRUD</h1>
     <form class="fundo" id="add-product-form">
         <h2>Add the product</h2>
 
         <label for="name">Name:</label>
-        <input class= "add-input" type="text" id="name" name="name" required>
+        <input class= "add-input" type="text" id="name" name="name" >
 
         <label for="price">Price:</label>
         <input class= "add-input" type="text" id="price" name="price"  >
 
         <label for="description">Description:</label>
-        <input class= "add-input" type="text" id="description" name="description" required>
+        <input class= "add-input" type="text" id="description" name="description" >
 
         <button class="buttons" type="submit">Add</button>
+        <button class="buttons" id="search-button"> Search ID</button>
+
+        <ul class="first-list" id="products"></ul>
     </form>
 
     <!-- form update -->
@@ -34,20 +37,33 @@
         <input type="hidden" id="update-id">
 
         <label for="update-name">Name:</label>
-        <input class= "add-input" type="text" id="update-name" name="update-name" required>
+        <input class= "add-input" type="text" id="update-name" name="update-name" >
 
         <label for="update-price">Price:</label>
-        <input class= "add-input" type="text" id="update-price" name="update-price" required>
+        <input class= "add-input" type="text" id="update-price" name="update-price" >
 
         <label for="update-description">Description:</label>
-        <input class= "add-input" type="text" id="update-description" name="update-description" required>
+        <input class= "add-input" type="text" id="update-description" name="update-description" >
 
         <button class="buttons" type="submit">Save</button>
         <button class="buttons" type="button" id="cancel-update">Cancel</button>
-    </form>
-</center>
 
-<ul id="products"></ul>
+
+    </form>
+
+    <form class="hidden" id="id-product-form">
+
+        <label for="ID">ID:</label>
+        <input class="add-input" type="text" id="ID" name="ID" >
+        <button class="buttons" type="button" id="search-button-id">Search</button>
+        <button class="buttons" type="button" id="back-button-id">Back</button>
+
+        <ul id="id-products"></ul>
+
+    </form>
+</div>
+
+
 
 <script src="app.js"></script>
 
